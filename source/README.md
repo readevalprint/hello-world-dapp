@@ -1,0 +1,1 @@
+This is the Eris Hello World dapp.

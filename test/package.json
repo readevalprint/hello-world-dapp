@@ -6,10 +6,10 @@
   },
   "dependencies": {
     "nightwatch": "^0.5.36",
-    "supervisor": "^0.6.0"
+    "nodemon": "^1.3.7"
   },
   "scripts": {
-    "start": "supervisor --no-restart-on exit node_modules/nightwatch/bin/nightwatch",
+    "start": "nodemon --exec nightwatch",
     "test": "nightwatch"
   }
 }

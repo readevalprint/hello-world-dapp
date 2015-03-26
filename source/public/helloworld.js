@@ -11,21 +11,8 @@
  */
 
 
-var baseUrl = "/apis/helloworld"
-
 // The placeholder HTTP api is used to send http messages to the decerver.
 var HttpAPI = function(){
-
-	this.send = function(method, url, body) {
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open(method, url, false);
-		if(typeof(body) === "undefined"){
-			body = null;
-		}
-		xmlHttp.send(body);
-		return xmlHttp.responseText;
-	}
-
 	this.sendAsync = function(method, url, body, callbackFn) {
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function(){
@@ -48,12 +35,10 @@ var	sender = new HttpAPI();
 
 function getFile(){
 	var fName = document.getElementById('filenameGet').value;
-	sender.sendAsync("GET", baseUrl + "/files/" + fName, null, function(re) {
+	sender.sendAsync("GET", "/files/" + fName, null, function(re) {
 		if (re.status === 200) {
 			console.log(re);
-			var body = re.response;
-			body = JSON.parse(body);
-	        document.getElementById('output').value = decodeURI(body.data);
+	    document.getElementById('output').value = re.response;
 	    } else {
 			document.getElementById('output').value = "File not found";
 		}
@@ -69,16 +54,12 @@ function addFile(){
 		return;
 	}
 
-	var jsonObj = { name : fName , data : encodeURI(body) };
-	console.log(jsonObj);
-
-	sender.sendAsync("POST", baseUrl + "/files", JSON.stringify(jsonObj), function(request) {
-		if (request.status === 200) {
-	        window.alert("File sent! You can now get it by its name.");
-		} else {
-			window.alert("Failed to add file:\n" + request.responseText);
-		}
-	});
+  sender.sendAsync("PUT", "/files/" + fName, body, function(request) {
+    if (request.status === 200) {
+	    humane.log("File sent! You can now get it by its name.");
+    } else {
+      window.alert("Failed to add file:\n" + request.responseText);
+    }
+  });          
 
 };
-

@@ -1,0 +1,24 @@
+{
+  "name": "Hello World",
+  "version": "0.1.0",
+  "description": "the Eris Hello World dapp",
+  "homepage": "https://github.com/eris-ltd/hello-world-dapp",
+  "authors": [
+    "Eris Industries <support@ErisIndustries.com>"
+  ],
+  "keywords": [
+    "dapp"
+  ],
+  "license": "LGPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "humane-js": "~3.2.2"
+  }
+}

@@ -1,13 +1,18 @@
 ipfs:
   image: jbenet/go-ipfs:latest
   volumes:
-    - .:/srv
+    - $TMPDIR:/srv
 
 helloworld:
   image: eris/decerver:node
   environment:
    - SOURCE
    - VCAP_APP_PORT=3000
+  ports:
+   # for debugging
+   - "3000:3000"
+  volumes:
+    - source:/home/node
 
 seleniumhub:
   image: selenium/hub:latest
@@ -15,10 +20,13 @@ seleniumhub:
    - "4444"
 
 seleniumnode:
-  image: selenium/node-chrome:latest
+  image: selenium/node-chrome-debug:latest
   links:
    - seleniumhub:hub
    - helloworld
+  # Attach VNC to this port for debugging.  The password is 'secret'.
+  ports:
+   - "5900:5900"
 
 helloworldtest:
   build: test
@@ -26,4 +34,3 @@ helloworldtest:
    - seleniumhub:selenium
   volumes:
     - test:/home/node
-  command: npm test

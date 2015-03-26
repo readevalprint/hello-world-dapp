@@ -1,6 +1,9 @@
+.cache
+.config
 .heroku
 .profile.d
-Procfile
+bower_components
 node_modules
 node-v*
+Procfile
 vendor

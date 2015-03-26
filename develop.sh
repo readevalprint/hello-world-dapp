@@ -1,10 +1,9 @@
 #!/bin/sh
 
-docker-compose up -d seleniumnode
-sleep 60
+docker-compose --file compose-dev.yml up -d seleniumnode
 
 cd test
   npm install
 cd ..
 
-docker-compose up --no-recreate -d helloworldtest
+docker-compose --file compose-dev.yml up --no-recreate -d helloworldtest
