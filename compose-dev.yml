@@ -1,18 +1,13 @@
-ipfs:
-  image: jbenet/go-ipfs:latest
-  volumes:
-    - $TMPDIR:/srv
-
 helloworld:
-  image: eris/decerver:node
+  image: eris/decerver:browser
   environment:
    - SOURCE
-   - VCAP_APP_PORT=3000
   ports:
    # for debugging
    - "3000:3000"
   volumes:
-    - source:/home/node
+    # - ../decerver:/usr/src/app
+    - source:/usr/src/app/local
 
 seleniumhub:
   image: selenium/hub:latest
@@ -29,8 +24,9 @@ seleniumnode:
    - "5900:5900"
 
 helloworldtest:
-  build: test
+  image: node:0.10
   links:
    - seleniumhub:selenium
   volumes:
-    - test:/home/node
+    - test:/usr/src/app
+  command: sh -c "cd /usr/src/app; npm install && npm start"

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-set -o errexit
+# CircleCI throws an error when we try to remove a container so don't set this.
+# set -o errexit
 
 # CircleCI doesn't support 'docker exec'.
 if [ -n "$CI" ]; then
@@ -16,26 +17,19 @@ fi
 # Start up IPFS so we can load the source code into it.
 docker-compose up -d ipfs
 
-echo Waiting for IPFS daemon to be ready.
+# Tell Bower to install components.
+docker-compose run --rm bower
 
-while ! docker_exec ipfs "/usr/bin/curl localhost:5001"; do
+echo Waiting for the IPFS daemon to be ready.
+
+while ! docker_exec ipfs "/usr/bin/curl --silent localhost:5001"; do
   sleep 1
 done
 
-# Tar the files because IPFS doesn't yet support symbolic links.
-cd source
-  tar --create --file=../source.tar --exclude-from=.gitignore *
-cd ..
-
-export SOURCE=$(docker_exec ipfs "/go/bin/ipfs add -quiet /srv/source.tar" \
+export SOURCE=$(docker_exec ipfs "/go/bin/ipfs add -recursive -quiet /usr/src/app" \
   | tail -n -1 | tr -d '\r')
 
 echo Loaded source code into IPFS at $SOURCE.
 
 docker-compose up -d seleniumnode
-
-cd test
-  npm install
-cd ..
-
 docker-compose run helloworldtest

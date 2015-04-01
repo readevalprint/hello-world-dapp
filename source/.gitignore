@@ -1,9 +1,1 @@
-.cache
-.config
-.heroku
-.profile.d
 bower_components
-node_modules
-node-v*
-Procfile
-vendor

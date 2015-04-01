@@ -1,1 +1,0 @@
-../bower_components/humane-js/humane.js
