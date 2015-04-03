@@ -1,19 +1,31 @@
 module.exports = {
-  "Hello World" : function (browser) {
+  "load page": function (browser) {
     browser
       .useXpath()
       .url('http://helloworld:3000/')
+      .waitForElementVisible('//input[@id="filenameGet"]', 180000);
+  },
 
-      .waitForElementVisible('//input[@id="filenameAdd"]', 180000)
-      .setValue('//input[@id="filenameAdd"]', "marmots")
-      .setValue('//textarea[@id="input"]', "https://erisindustries.com/")
-      .click('(//button)[1]')
-
-      .waitForElementPresent('//div[@class="humane"]', 1000)
-      .setValue('//input[@id="filenameGet"]', "marmots")
+  "missing file": function (browser) {
+    browser
+      .setValue('//*[@id="filenameGet"]', "centralized")
       .click('(//button)[2]')
+      .waitForElementVisible('//*[contains(@class, "alertify-log-error")]', 1000)
+      .assert.containsText('//*[contains(@class, "alertify-log-error")]', "File not found");
+  },
 
-      .assert.value('//textarea[@id="output"]', "https://erisindustries.com/")
-      .end();
+  "add marmots (file)": function (browser) {
+    browser
+      .setValue('//*[@id="filenameAdd"]', "marmots")
+      .setValue('//*[@id="input"]', "https://erisindustries.com/")
+      .click('(//button)[1]')
+      .waitForElementVisible('//*[contains(@class, "alertify-log-success")]', 1000)
+      .assert.containsText('//*[contains(@class, "alertify-log-success")]', "File sent! You can now get it by its name.")
+
+      .clearValue('//*[@id="filenameGet"]')
+      .setValue('//*[@id="filenameGet"]', "marmots")
+      .click('(//button)[2]')
+      .assert.value('//*[@id="output"]', "https://erisindustries.com/")
+      browser.end();
   }
 };

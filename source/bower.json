@@ -18,6 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "humane-js": "~3.2.2"
+    "alertifyjs": "~0.3.16"
   }
 }

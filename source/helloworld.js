@@ -10,9 +10,15 @@
  *																				  
  */
 
-
 function getFile(){
-  document.getElementById('output').value = "https://erisindustries.com/";
+  var fName = document.getElementById('filenameGet').value;
+
+  if (fName === "marmots")
+    document.getElementById('output').value = "https://erisindustries.com/";
+  else {
+    document.getElementById('output').value = "";
+    alertify.error("File not found");
+  }
 };
 
 function addFile(){
@@ -24,5 +30,5 @@ function addFile(){
 		return;
 	}
 
-  humane.log("File sent! You can now get it by its name.");
+  alertify.success("File sent! You can now get it by its name.");
 };
