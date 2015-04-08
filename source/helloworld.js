@@ -17,6 +17,8 @@ var
   Promise = require('bluebird'),
   ipfs = require('ipfs-api')(window.location.hostname);
 
+Promise.promisifyAll(ipfs);
+
 module.exports = {
   getFile: getFile,
   addFile: addFile,
@@ -64,8 +66,17 @@ function getItem(key) {
 }
 
 function setItem(key, value) {
-  return new Promise(function (resolve, reject) {
-    items[key]= value;
-    resolve();
+  var
+    name;
+
+  items[key] = value;
+  name = "Eris Industries/Hello World/" + key;
+
+  return ipfs.addAsync(new Buffer(name)).then(function (nameResult) {
+    console.log("name", nameResult.Hash);
+
+    ipfs.addAsync(new Buffer(value)).then(function (valueResult) {
+      console.log("value", valueResult.Hash);
+    });
   });
 }
