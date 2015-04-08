@@ -1,12 +1,24 @@
-helloworld:
+helloworldone:
   image: eris/decerver:browser
   environment:
    - SOURCE
   ports:
    # for debugging
    - "3000:3000"
+   - "5001:5001"
   volumes:
-    # - ../decerver:/usr/src/app
+    - ../decerver:/usr/src/app
+    - source:/usr/src/app/local
+
+helloworldtwo:
+  image: eris/decerver:browser
+  environment:
+   - SOURCE
+  ports:
+   # for debugging
+   - "3001:3000"
+  volumes:
+    - ../decerver:/usr/src/app
     - source:/usr/src/app/local
 
 seleniumhub:
@@ -18,7 +30,8 @@ seleniumnode:
   image: selenium/node-chrome-debug:latest
   links:
    - seleniumhub:hub
-   - helloworld
+   - helloworldone
+   - helloworldtwo
   # Attach VNC to this port for debugging.  The password is 'secret'.
   ports:
    - "5900:5900"
