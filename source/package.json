@@ -1,0 +1,17 @@
+{
+  "name": "hello-world",
+  "version": "0.1.0",
+  "description": "Eris Hello World decentralized application",
+  "repository": "https://github.com/eris-ltd/hello-world-dapp/tree/browser",
+  "main": "index.html",
+  "dependencies": {
+    "alertifyjs": "^1.3.0",
+    "bluebird": "^2.9.24",
+    "browserify": "^9.0.6",
+    "ipfs-api": "^1.1.0"
+  },
+  "scripts": {
+    "install": "browserify helloworld.js --standalone HelloWorld > bundle.js"
+  },
+  "license": "LGPL"
+}

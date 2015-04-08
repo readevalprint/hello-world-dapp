@@ -10,6 +10,20 @@
  *																				  
  */
 
+'use strict';
+
+var
+  alertify = require('alertifyjs'),
+  Promise = require('bluebird'),
+  ipfs = require('ipfs-api')(window.location.hostname);
+
+module.exports = {
+  getFile: getFile,
+  addFile: addFile,
+  getItem: getItem,
+  setItem: setItem
+};
+
 function getFile(){
   var fName = document.getElementById('filenameGet').value;
 
@@ -30,5 +44,28 @@ function addFile(){
 		return;
 	}
 
+  ipfs.add(new Buffer(body), function(err, data) {
+    console.log(err, data)
+  });
+
   alertify.success("File sent! You can now get it by its name.");
 };
+
+var
+  items = {};
+
+function getItem(key) {
+  return new Promise(function (resolve, reject) {
+    if (key in items)
+      resolve(items[key]);
+    else
+      reject();
+  });
+}
+
+function setItem(key, value) {
+  return new Promise(function (resolve, reject) {
+    items[key]= value;
+    resolve();
+  });
+}

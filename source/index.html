@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Hello World Dapp (Beta)</title>
-	<link rel="stylesheet" href="bower_components/alertifyjs/dist/css/alertify.css">
+	<link rel="stylesheet" href="node_modules/alertifyjs/build/css/alertify.css">
 </head>
 
 <body>
@@ -24,7 +24,7 @@
 
 			<!-- The button -->
 			<div style="float: left; display: block; position: relative; clear: both; margin-top: 3px;">
-				<button type="button" onclick="addFile();">Submit</button>
+				<button type="button" onclick="HelloWorld.addFile()">Submit</button>
 			</div>
 		</div>
 
@@ -41,13 +41,12 @@
 
 			<!-- The button -->
 			<div style="float: left; display: block; position: relative; clear: both; margin-top: 3px;">
-				<button type="button" onclick="getFile();">Get</button>
+				<button type="button" onclick="HelloWorld.getFile()">Get</button>
 			</div>
 		</div>
 	</div>
 
-	<script src="bower_components/alertifyjs/dist/js/alertify.js"></script>
-	<script src="helloworld.js"></script>
+	<script src="bundle.js"></script>
 </body>
 
 </html>
