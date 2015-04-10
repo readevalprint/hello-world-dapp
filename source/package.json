@@ -11,7 +11,7 @@
     "ipfs-api": "^1.1.0"
   },
   "scripts": {
-    "install": "browserify helloworld.js --standalone HelloWorld > bundle.js"
+    "build": "browserify --standalone HelloWorld helloworld.js > bundle.js"
   },
   "license": "LGPL"
 }

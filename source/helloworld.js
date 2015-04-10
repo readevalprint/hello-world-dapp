@@ -18,12 +18,15 @@ var
   ipfs = require('ipfs-api')(window.location.hostname);
 
 Promise.promisifyAll(ipfs);
+ipfs.dht.getAsync = Promise.promisify(ipfs.dht.get);
+ipfs.dht.putAsync = Promise.promisify(ipfs.dht.put);
 
 module.exports = {
   getFile: getFile,
   addFile: addFile,
   getItem: getItem,
-  setItem: setItem
+  setItem: setItem,
+  ipfs: ipfs
 };
 
 function getFile(){
@@ -53,30 +56,48 @@ function addFile(){
   alertify.success("File sent! You can now get it by its name.");
 };
 
-var
-  items = {};
-
-function getItem(key) {
-  return new Promise(function (resolve, reject) {
-    if (key in items)
-      resolve(items[key]);
-    else
-      reject();
-  });
-}
-
-function setItem(key, value) {
+function getItem(key, index, previousName) {
   var
     name;
 
-  items[key] = value;
-  name = "Eris Industries/Hello World/" + key;
+  index = index || 1;
+  name = "Eris Industries/Hello World/" + key + "/" + index;
 
   return ipfs.addAsync(new Buffer(name)).then(function (nameResult) {
-    console.log("name", nameResult.Hash);
+    return ipfs.dht.getAsync(nameResult.Hash).then(function () {
+      console.log("Found an entry for " + key + " at index " + index
+        + ".  Trying again.");
 
-    ipfs.addAsync(new Buffer(value)).then(function (valueResult) {
-      console.log("value", valueResult.Hash);
+      return getItem(key, index + 1, nameResult.Hash);
+    }).catch(function () {
+      if (previousName)
+        return ipfs.dht.getAsync(previousName).then(function (result) {
+          return result.Extra;
+        });
+      else throw new Error();
+    });
+  });
+}
+
+function setItem(key, value, index) {
+  var
+    name;
+
+  index = index || 1;
+  name = "Eris Industries/Hello World/" + key + "/" + index;
+
+  return ipfs.addAsync(new Buffer(name)).then(function (nameResult) {
+    ipfs.dht.getAsync(nameResult.Hash).then(function () {
+      console.log("Found an entry for " + key + " at index " + index
+        + ".  Trying again.");
+
+      return setItem(key, value, index + 1);
+    }).catch(function () {
+      ipfs.addAsync(new Buffer(value)).then(function (valueResult) {
+        console.log("Storing " + [key, value] + " at index " + index + ".");
+        console.log(nameResult.Hash, valueResult.Hash);
+        return ipfs.dht.putAsync(nameResult.Hash, valueResult.Hash);
+      });
     });
   });
 }
