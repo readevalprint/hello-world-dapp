@@ -22,40 +22,13 @@ ipfs.dht.getAsync = Promise.promisify(ipfs.dht.get);
 ipfs.dht.putAsync = Promise.promisify(ipfs.dht.put);
 
 module.exports = {
-  getFile: getFile,
-  addFile: addFile,
   getItem: getItem,
   setItem: setItem,
-  ipfs: ipfs
+  getFile: getFile,
+  addFile: addFile
 };
 
-function getFile(){
-  var fName = document.getElementById('filenameGet').value;
-
-  if (fName === "marmots")
-    document.getElementById('output').value = "https://erisindustries.com/";
-  else {
-    document.getElementById('output').value = "";
-    alertify.error("File not found");
-  }
-};
-
-function addFile(){
-	var fName = document.getElementById('filenameAdd').value;
-	var body = document.getElementById('input').value;
-	
-	if(body === "" || fName === ""){
-		window.alert("You must provide a file name and some data.");
-		return;
-	}
-
-  ipfs.add(new Buffer(body), function(err, data) {
-    console.log(err, data)
-  });
-
-  alertify.success("File sent! You can now get it by its name.");
-};
-
+// Get a value from IPFS.
 function getItem(key, index, previousName) {
   var
     name;
@@ -82,6 +55,7 @@ function getItem(key, index, previousName) {
   });
 }
 
+// Store a key/value pair in IPFS.
 function setItem(key, value, index) {
   var
     name;
@@ -105,3 +79,38 @@ function setItem(key, value, index) {
       });
   });
 }
+
+function getFile(){
+  var
+    fName = document.getElementById('filenameGet').value,
+    newValue;
+
+  alertify.message("Getting file.", 0);
+
+  getItem(fName).then(function (value) {
+      alertify.dismissAll();
+      alertify.success("Got file.");
+      newValue = value;
+    },
+    function () {
+      newValue = "";
+      alertify.dismissAll();
+      alertify.error("File not found");
+    }).finally(function () {
+      document.getElementById('output').value = newValue;
+    });
+};
+
+function addFile(){
+	var fName = document.getElementById('filenameAdd').value;
+	var body = document.getElementById('input').value;
+	
+	if(body === "" || fName === ""){
+		window.alert("You must provide a file name and some data.");
+		return;
+	}
+
+  setItem(fName, body).then(function () {
+    alertify.success("File sent! You can now get it by its name.");
+  });
+};
