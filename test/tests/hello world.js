@@ -6,18 +6,21 @@ var
 name = String(Math.random());
 
 module.exports = {
-  "load page": function (browser) {
+  before: function (browser) {
+    console.log("Testing with name '" + name + "'.");
+
     browser
       .useXpath()
-      .url('http://helloworldone:3000/')
-      .waitForElementVisible('//input[@id="filenameGet"]', 10000);
+      .maximizeWindow();
   },
 
   "missing file": function (browser) {
     browser
+      .url('http://helloworldone:3000/')
+      .waitForElementPresent('//input[@id="filenameGet"]')
       .setValue('//*[@id="filenameGet"]', "centralized")
       .click('(//button)[2]')
-      .waitForElementVisible('//*[contains(@class, "ajs-error")]', 10000)
+      .waitForElementVisible('//*[contains(@class, "ajs-error")]')
 
       .assert.containsText('//*[contains(@class, "ajs-error")]',
         "File not found");
@@ -28,12 +31,12 @@ module.exports = {
       .setValue('//*[@id="filenameAdd"]', name)
       .setValue('//*[@id="input"]', "http://www.marmotburrow.ucla.edu/index.html")
       .click('(//button)[1]')
-      .waitForElementVisible('//*[contains(@class, "ajs-success")]', 30000)
+      .waitForElementVisible('//*[contains(@class, "ajs-success")]')
 
       .assert.containsText('//*[contains(@class, "ajs-success")]',
         "File sent! You can now get it by its name.")
 
-      .waitForElementNotPresent('//*[contains(@class, "ajs-success")]', 10000);
+      .waitForElementNotPresent('//*[contains(@class, "ajs-success")]');
   },
 
   "get file from one": function (browser) {
@@ -41,7 +44,7 @@ module.exports = {
       .clearValue('//*[@id="filenameGet"]')
       .setValue('//*[@id="filenameGet"]', name)
       .click('(//button)[2]')
-      .waitForElementVisible('//*[contains(@class, "ajs-success")]', 30000)
+      .waitForElementVisible('//*[contains(@class, "ajs-success")]')
 
       .assert.containsText('//*[contains(@class, "ajs-success")]',
         "Got file.")
@@ -52,16 +55,17 @@ module.exports = {
   "get file from two": function (browser) {
     browser
       .url('http://helloworldtwo:3000/')
-      .waitForElementVisible('//input[@id="filenameGet"]', 1000)
+      .waitForElementPresent('//input[@id="filenameGet"]')
       .clearValue('//*[@id="filenameGet"]')
       .setValue('//*[@id="filenameGet"]', name)
       .click('(//button)[2]')
-      .waitForElementVisible('//*[contains(@class, "ajs-success")]', 60000)
+      .waitForElementVisible('//*[contains(@class, "ajs-success")]')
 
       .assert.containsText('//*[contains(@class, "ajs-success")]',
         "Got file.")
 
-      .assert.value('//*[@id="output"]', "http://www.marmotburrow.ucla.edu/index.html");
+      .assert.value('//*[@id="output"]', "http://www.marmotburrow.ucla.edu/index.html")
+      .waitForElementNotPresent('//*[contains(@class, "ajs-success")]');
   },
 
   "change file on two": function (browser) {
@@ -69,23 +73,22 @@ module.exports = {
       .setValue('//*[@id="filenameAdd"]', name)
       .setValue('//*[@id="input"]', "https://erisindustries.com/")
       .click('(//button)[1]')
-      .waitForElementVisible('//*[contains(@class, "ajs-success")]',
-        1000)
+      .waitForElementVisible('//*[contains(@class, "ajs-success")]')
 
       .assert.containsText('//*[contains(@class, "ajs-success")]',
         "File sent! You can now get it by its name.")
 
-      .waitForElementNotPresent('//*[contains(@class, "ajs-success")]', 10000);
+      .waitForElementNotPresent('//*[contains(@class, "ajs-success")]');
   },
 
   "get changed file from two": function (browser) {
     browser
       .url('http://helloworldtwo:3000/')
-      .waitForElementVisible('//input[@id="filenameGet"]', 1000)
+      .waitForElementPresent('//input[@id="filenameGet"]')
       .clearValue('//*[@id="filenameGet"]')
       .setValue('//*[@id="filenameGet"]', name)
       .click('(//button)[2]')
-      .waitForElementVisible('//*[contains(@class, "ajs-success")]', 30000)
+      .waitForElementVisible('//*[contains(@class, "ajs-success")]')
 
       .assert.containsText('//*[contains(@class, "ajs-success")]',
         "Got file.")
@@ -95,10 +98,12 @@ module.exports = {
 
   "get changed file from one": function (browser) {
     browser
+      .url('http://helloworldone:3000/')
+      .waitForElementPresent('//input[@id="filenameGet"]')
       .clearValue('//*[@id="filenameGet"]')
       .setValue('//*[@id="filenameGet"]', name)
       .click('(//button)[2]')
-      .waitForElementVisible('//*[contains(@class, "ajs-success")]', 30000)
+      .waitForElementVisible('//*[contains(@class, "ajs-success")]')
 
       .assert.containsText('//*[contains(@class, "ajs-success")]',
         "Got file.")
