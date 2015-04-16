@@ -46,8 +46,8 @@ function getItem(key, index, previousName) {
       },
       function () {
         if (previousName)
-          return ipfs.dht.getAsync(previousName).then(function (result) {
-            return ipfs.catAsync(result.Extra);
+          return ipfs.dht.getAsync(previousName).then(function (value) {
+            return ipfs.catAsync(value);
           });
         else
           throw new ReferenceError(key + " not found.");
