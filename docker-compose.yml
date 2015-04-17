@@ -9,13 +9,15 @@ ipfs:
   volumes:
     - source:/usr/src/app
 
-helloworld:
+helloworldone:
   image: eris/decerver:browser
   environment:
    - SOURCE
-  ports:
-   # for debugging
-   - "3000:3000"
+
+helloworldtwo:
+  image: eris/decerver:browser
+  environment:
+   - SOURCE
 
 seleniumhub:
   image: selenium/hub:latest
@@ -26,7 +28,8 @@ seleniumnode:
   image: selenium/node-chrome:latest
   links:
    - seleniumhub:hub
-   - helloworld
+   - helloworldone
+   - helloworldtwo
 
 helloworldtest:
   image: node:0.10
