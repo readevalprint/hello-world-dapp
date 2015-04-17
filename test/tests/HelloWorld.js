@@ -14,6 +14,13 @@ module.exports = {
       .maximizeWindow();
   },
 
+  "Jasmine tests": function (browser) {
+    browser
+      .url('http://helloworldone:3000/jasmine/SpecRunner.html')
+      .waitForElementVisible('//*[@class="bar passed"]')
+      .assert.containsText('//*[@class="bar passed"]', "0 failures");
+  },
+
   "missing file": function (browser) {
     browser
       .url('http://helloworldone:3000/')
