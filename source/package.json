@@ -8,10 +8,10 @@
     "alertifyjs": "^1.3.0",
     "bluebird": "^2.9.24",
     "browserify": "^9.0.6",
-    "ipfs-api": "^1.1.0"
+    "ipfs-api": "eris-ltd/node-ipfs-api"
   },
   "scripts": {
-    "build": "browserify --standalone HelloWorld helloworld.js > bundle.js"
+    "build": "browserify --standalone HelloWorld HelloWorld.js > bundle.js"
   },
   "license": "LGPL"
 }
