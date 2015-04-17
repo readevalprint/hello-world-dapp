@@ -1,8 +1,8 @@
-bower:
+npm:
   image: node:0.10
   volumes:
     - source:/usr/src/app
-  command: sh -c "npm install --global bower; cd /usr/src/app; bower --allow-root --config.analytics=false install"
+  command: sh -c "cd /usr/src/app; npm install"
 
 ipfs:
   image: jbenet/go-ipfs:latest

@@ -17,8 +17,8 @@ fi
 # Start up IPFS so we can load the source code into it.
 docker-compose up -d ipfs
 
-# Tell Bower to install components.
-docker-compose run --rm bower
+# Tell NPM to install modules.
+docker-compose run --rm npm
 
 echo Waiting for the IPFS daemon to be ready.
 
