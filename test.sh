@@ -28,7 +28,7 @@ done
 
 echo Adding source code to IPFS.
 
-export SOURCE=$(docker_exec ipfs "/go/bin/ipfs add -recursive -quiet /usr/src/app" \
+export SOURCE=$(docker_exec ipfs "/go/bin/ipfs add --recursive --quiet /usr/src/app" \
   | tail -n -1 | tr -d '\r')
 
 echo Loaded source code into IPFS at $SOURCE.
