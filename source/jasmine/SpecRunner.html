@@ -11,6 +11,26 @@
   <script src="lib/jasmine-2.2.0/jasmine-html.js"></script>
   <script src="lib/jasmine-2.2.0/boot.js"></script>
 
+  <script type="text/javascript" src="lib/jasmine-2.2.0/console.js"></script>
+  <script type="text/javascript">
+    // Implement our own crude console log for use with Selenium tests.
+    var
+      consoleLog, logArguments;
+
+    consoleLog = console.log;
+    logArguments = [];
+
+    console.log = function () {
+      logArguments.push(arguments);
+      consoleLog.apply(console, arguments);
+    };
+
+    // https://github.com/jasmine/jasmine/issues/493#issuecomment-31630393
+    var ConsoleReporter = jasmineRequire.ConsoleReporter();
+    var reporter = new ConsoleReporter({timer: new jasmine.Timer, print: function() { console.log.apply(console, arguments); }}); // optionally pass in showColors: true
+    jasmine.getEnv().addReporter(reporter);
+  </script>
+
   <!-- include source files here... -->
   <script src="../bundle.js"></script>
 

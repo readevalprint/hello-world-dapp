@@ -17,7 +17,27 @@ module.exports = {
   "Jasmine tests": function (browser) {
     browser
       .url('http://helloworldone:3000/jasmine/SpecRunner.html')
-      .waitForElementVisible('//*[@class="bar passed"]')
+      .waitForElementVisible('//*[contains(@class, "bar")]')
+
+      // This isn't working for some reason so we implement it ourselves.  Maybe
+      // we can use it in the future.
+      //
+      // .getLog('browser', function(logEntriesArray) {
+      //     console.log('Log length: ' + logEntriesArray.length);
+      //     logEntriesArray.forEach(function(log) {
+      //        console.log('[' + log.level + '] ' + log.timestamp + ' : ' + log.message);
+      //      });
+      //   })
+
+      .execute(function () { return window.logArguments; }, [], 
+        function (response) {
+          console.log("\nBrowser console:\n");
+
+          response.value.forEach(function (entry) {
+            console.log.apply(console, entry);
+          });
+        })
+
       .assert.containsText('//*[@class="bar passed"]', "0 failures");
   },
 
