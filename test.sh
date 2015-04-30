@@ -26,6 +26,8 @@ while ! docker_exec ipfs "/usr/bin/curl --silent localhost:5001"; do
   sleep 1
 done
 
+echo Adding source code to IPFS.
+
 export SOURCE=$(docker_exec ipfs "/go/bin/ipfs add -recursive -quiet /usr/src/app" \
   | tail -n -1 | tr -d '\r')
 
