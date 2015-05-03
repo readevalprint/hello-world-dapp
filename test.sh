@@ -6,7 +6,7 @@
 # CircleCI doesn't support 'docker exec'.
 if [ -n "$CI" ]; then
   docker_exec() {
-    sudo lxc-attach -n $(docker-compose ps -q $1) -- bash -c "HOME=/root $2"
+    sudo lxc-attach -n $(docker-compose ps -q $1) -- su ipfs --command "$2"
   }
 else
   docker_exec() {
@@ -28,7 +28,7 @@ done
 
 echo Adding source code to IPFS.
 
-export SOURCE=$(docker_exec ipfs "/go/bin/ipfs add --recursive --quiet /usr/src/app" \
+export SOURCE=$(docker_exec ipfs "IPFS_PATH=/data/ipfs /go/bin/ipfs add --recursive --quiet /usr/src/app" \
   | tail -n -1 | tr -d '\r')
 
 echo Loaded source code into IPFS at $SOURCE.
