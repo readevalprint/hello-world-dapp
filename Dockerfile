@@ -3,10 +3,10 @@ MAINTAINER Eris Industries <support@erisindustries.com>
 
 USER root
 
-COPY . /home/$user/.decerver/source
+COPY . /home/$user/.eris/source
 RUN chown --recursive $user /home/$user
 
 USER $user
 
-VOLUME /home/$user/.decerver
-CMD /home/$user/.decerver/source/cmd.sh
+VOLUME /home/$user/.eris
+CMD /home/$user/.eris/source/cmd.sh

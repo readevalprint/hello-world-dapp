@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ~/.decerver/source
+cd ~/.eris/source
 
 echo ""
 echo ""
@@ -53,13 +53,13 @@ echo "ROOT_CONTRACT ($ROOT_CONTRACT) and "
 echo "PEER_SERVER ($remote_host:$remote_port)"
 mv package.json /tmp/
 jq '.module_dependencies[0].data |= . * {peer_server_address: "'$remote_host:$remote_port'", blockchain_id: "'$BLOCKCHAIN_ID'", root_contract: "'$ROOT_CONTRACT'"}' /tmp/package.json \
-    > ~/.decerver/dapps/helloworld/package.json
+    > ~/.eris/dapps/helloworld/package.json
 
 echo ""
 echo ""
 echo "My package.json now looks like this."
 # this is here for debugging, feel free to remove
-cat ~/.decerver/dapps/helloworld/package.json
+cat ~/.eris/dapps/helloworld/package.json
 
 echo ""
 echo ""
