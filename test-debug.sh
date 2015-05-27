@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # start the background containers
-docker-compose up --no-recreate -d compilers ipfs helloworldmaster
+docker-compose up --no-recreate compilers ipfs helloworldmaster &
 sleep 5 # give the master a bit of time to get everything sorted
 
 # start the writer
-docker-compose up --no-recreate -d helloworldwrite
+docker-compose up --no-recreate helloworldwrite &
 sleep 30 # give the writer time to catch up with master and deploy contracts
 
 # grab the root contract from the writer
@@ -20,7 +20,10 @@ echo $ROOT_CONTRACT
 echo ""
 
 # start the reader
-docker-compose up -d --no-recreate helloworldread
+docker-compose up --no-recreate helloworldread &
 
-docker-compose up -d --no-recreate seleniumnode
-docker-compose run helloworldtest
+# docker-compose up --no-recreate seleniumnode &
+
+# docker-compose run helloworldtest
+# docker-compose kill
+# docker-compose rm --force

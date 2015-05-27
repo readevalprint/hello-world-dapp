@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ~/.eris/source
+cd ~/.eris/dapps/helloworld
 
 echo ""
 echo ""
@@ -32,9 +32,9 @@ remote_host="helloworldmaster"
 remote_port="15254"
 epm config remote_host:$remote_host remote_port:$remote_port use_seed:true
 
-# now its time to install the dapp and deploy the contracts on
+# now its time to deploy the contracts on
 #   the checked out chain.
-epm --log 4 install --no-new . helloworld
+cd contracts && epm --log 4 deploy && cd ..
 # another small catchup command to make the chain plays nice
 #   post deployment
 epm --log ${LOG_LEVEL:=3} run & sleep 2 && kill $(epm plop pid)
