@@ -1,0 +1,1 @@
+This is the beginning of redesigning Hello World to work with a Node-based Decerver (the `node` branch).  Work is now being done instead on a browser-based Hello World and Decerver (the `browser` branches in each repository).  We're keeping this branch in case we want to revisit Node-based dapps in the future but for now all new work should be done in the `browser` branches.
