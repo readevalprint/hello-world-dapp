@@ -10,9 +10,14 @@ Requirements:
 
 Begin by running the `test.sh` script to make sure everything's working.
 
-For rapid development you may want to use the `develop.sh` script.
-
 The application communicates with the Decerver using the IPFS protocol.  It is expected that this will be replaced with an Eris protocol in the future.
+
+## Development
+
+1.  Open a shell in the `source` directory and leave it open.
+1.  Run `npm install`.
+1.  Start the containers by running the `develop.sh` script.  It will launch a web server container and a test container.
+1.  Whenever you make a change to a JavaScript file (such as `HelloWorld.js`), you need to re-bundle it before you can see the change reflected in the browser.  Do this by running the command `npm run build` and then refresh your application in the browser.
 
 # Copyright
 
