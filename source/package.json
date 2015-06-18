@@ -13,5 +13,5 @@
   "scripts": {
     "build": "browserify --standalone HelloWorld HelloWorld.js > bundle.js"
   },
-  "license": "LGPL"
+  "license": "GPL-3.0"
 }
