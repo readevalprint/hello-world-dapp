@@ -1,3 +1,19 @@
+# Hello World
+
+This application demonstrates simple name registration using the Eris Decerver
+and IPFS.  No blockchains nor smart contracts are employed (yet).
+
+Requirements:
+
+* Docker
+* Docker Compose
+
+Begin by running the `test.sh` script to make sure everything's working.
+
+For rapid development you may want to use the `develop.sh` script.
+
+The application communicates with the Decerver using the IPFS protocol.  It is expected that this will be replaced with an Eris protocol in the future.
+
 # Copyright
 
 Copyright 2015 Eris Industries
