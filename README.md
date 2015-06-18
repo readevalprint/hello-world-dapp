@@ -14,10 +14,12 @@ The application communicates with the Decerver using the IPFS protocol.  It is e
 
 ## Development
 
-1.  Open a shell in the `source` directory and leave it open.
-1.  Run `npm install`.
-1.  Start the containers by running the `develop.sh` script.  It will launch a web server container and a test container.
-1.  Whenever you make a change to a JavaScript file (such as `HelloWorld.js`), you need to re-bundle it before you can see the change reflected in the browser.  Do this by running the command `npm run build` and then refresh your application in the browser.
+1.  Open a shell in the `source` directory and leave it open.  Run the following commands:
+1.  `npm install`
+1.  `npm run build`
+1.  `develop.sh`.  It will start a server container and a test container.
+1.  See the dapp by opening `http://localhost:3000` in a browser.
+1.  Whenever you make a change to a JavaScript file (such as `HelloWorld.js`), you need to re-bundle it before you can see the change reflected in the browser.  Do this by re-running the command `npm run build` and then refresh your browser.
 
 # Copyright
 
