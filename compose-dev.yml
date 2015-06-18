@@ -7,7 +7,6 @@ helloworldone:
    - "3000:3000"
    - "5001:5001"
   volumes:
-    - ../decerver:/usr/src/app
     - source:/usr/src/app/local
 
 helloworldtwo:
@@ -18,7 +17,6 @@ helloworldtwo:
    # for debugging
    - "3001:3000"
   volumes:
-    - ../decerver:/usr/src/app
     - source:/usr/src/app/local
 
 seleniumhub:
