@@ -10,7 +10,7 @@ if [ -n "$CI" ]; then
   }
 else
   docker_exec() {
-    docker exec $(docker-compose ps -q $1) $2
+    docker exec $(docker-compose ps -q $1) /bin/sh -c "$2"
   }
 fi
 
